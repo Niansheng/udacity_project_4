@@ -11,4 +11,12 @@ pipeline {
             }
         }
     }
+    stage('Upload to AWS') {
+        steps {
+            withAWS(region:'eu-west-2', credentials:'AKIAYG3MTHUE44355MP6') {
+            sh 'echo "Uploading content with AWS creds"'
+                s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html', bucket:'udacityproject4-static')
+            }
+        }
+    }
 }
